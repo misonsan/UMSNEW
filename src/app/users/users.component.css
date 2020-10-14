@@ -1,0 +1,3 @@
+tr:nth-child(even) {
+  background-color:#FFF8C6;   /*  #f2f2f2  */  /*  per fare colore alternato delle righe */
+}

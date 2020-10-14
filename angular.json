@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "UMSNEW"
+    }
+  },
+  "defaultProject": "UMSNEW",
+  "cli": {
+    "analytics": "07fe9ed6-bcf9-47f5-9388-aed2aeb5f34d"
+  }
 }
