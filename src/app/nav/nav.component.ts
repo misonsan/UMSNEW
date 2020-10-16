@@ -10,6 +10,10 @@ export class NavComponent implements OnInit {
 
   @Output() onNewUser = new EventEmitter();
   faUserPlus = faUserPlus;
+
+  public showMenu = true;    // variabile per impostare la visualizzazione della barra  - soluzione puro Angular
+
+  public isColapsed = true;  // variabile per soluzione con ngbootstrap
   constructor() { }
 
   ngOnInit(): void {
@@ -18,6 +22,11 @@ export class NavComponent implements OnInit {
 
   newUser() {
     this.onNewUser.emit();
+  }
+
+  // se utilizziamo la soluzione di Angular Puro
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
   }
 
 }
