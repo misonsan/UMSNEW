@@ -9,19 +9,26 @@ import { UsersComponent } from './users/users.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
+import { NavComponent } from './nav/nav.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalBasicComponent } from './modal-basic/modal-basic.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     UsersComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    NavComponent,
+    ModalBasicComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgbModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

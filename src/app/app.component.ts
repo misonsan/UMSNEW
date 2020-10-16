@@ -2,6 +2,7 @@
 import {Component} from '@angular/core';
 import {User} from './classes/user';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,11 +15,11 @@ export class AppComponent {
   userSelected = new User();
   faUserPlus = faUserPlus;
 
-  updateUser(user: User) {
+    updateUser(user: User) {
     this.showForm = true;
     this.userSelected = user;
   }
-  newUser() {
+    newUser() {
     this.userSelected = new User();
     this.showForm = true;
 
