@@ -1,7 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {User} from '../classes/user';
 import {UserService} from '../services/user.service';
-import { faUndo, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faUndo, faSave, faHandPointLeft } from '@fortawesome/free-solid-svg-icons';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
@@ -17,7 +18,7 @@ export class UserDetailComponent implements OnInit {
   // definizione delle icone utilizzate
   faSave = faSave;
   faUndo = faUndo;
-
+  faHandPointLeft = faHandPointLeft;
 
   @Input() set user(user: User) {
     this.__user = user;
@@ -28,10 +29,20 @@ export class UserDetailComponent implements OnInit {
     return this.__user;
   }
 
-  constructor(private userService: UserService) {
-  }
+  constructor(private userService: UserService,
+              private route: ActivatedRoute,
+              private router: Router) {
+   }
 
   ngOnInit() {
+    this.user = new User();
+
+    this.route.params.subscribe(
+      (params) => {
+      //  alert('User-Detail ---> ngOnInit masso codiceuser: ' + params.id);
+        this.user = this.userService.getUser(+params.id);
+      }
+    );
   }
 
   saveUser() {
@@ -40,6 +51,7 @@ export class UserDetailComponent implements OnInit {
     } else {
       this.userService.createUser(this.user);
     }
+    this.router.navigate(['users']);
   }
 
   resetForm(form) {
@@ -50,5 +62,9 @@ export class UserDetailComponent implements OnInit {
       this.user = this.usercopy;
     }
 
+  }
+
+  backToUsers(){
+    this.router.navigate(['users']);
   }
 }

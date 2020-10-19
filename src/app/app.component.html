@@ -1,17 +1,19 @@
-<app-nav (onNewUser)="newUser()"></app-nav>
+<app-nav></app-nav>
 
 
-<div class="container-fluid">
-  <app-modal-basic></app-modal-basic>
-  <h1>User Management system</h1>
- <!-- <fa name="pen-square"></fa>   -->
-<table>   <!--   fino a video 28 - installazione awesome-->
+<div class="container">
+<!--<app-modal-basic></app-modal-basic>   spostata su navbar -->
+  <h1>User Management system - userNew</h1>
+
+<!--
+
+<table>  //   fino a video 28 - installazione awesome
   <tr>
     <div class="form-group">
     <td>
       <div class="col-sm-2">
         <button class="btn btn-primary btn-sm" (click)="newUser()">
-          <!-- <fa name="user-plus"></fa>   -->
+
           <fa-icon [icon]="faUserPlus"></fa-icon>
         </button>
       </div>
@@ -25,15 +27,12 @@
   </div>
   </tr>
 
-</table>
+</table>   -->
 
-<br>
+
   <div class="row">
-    <div class="col-md-8">
-        <app-users (updateUser) = "updateUser($event)"></app-users>
-    </div>
-    <div class="col-md-4" *ngIf="showForm">
-        <app-user-detail [user] = "userSelected"></app-user-detail>
-    </div>
+      <div class="col-md-12">
+        <router-outlet></router-outlet>
+      </div>
   </div>
 </div>

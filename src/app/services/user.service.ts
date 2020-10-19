@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import { User } from '../classes/user';
 
 
+
 @Injectable()
 
 export class UserService {
@@ -60,6 +61,12 @@ export class UserService {
     return this.users;
   }
 
+  getUser(id: number):  User {
+      return  this.users.find(user => user.id === id);
+  }
+
+
+
   deleteUser(user: User) {
          // determino indice dell'elemento da cancellare
     const index = this.users.indexOf(user);
@@ -77,6 +84,8 @@ export class UserService {
     // alert('l indice trovato da modificare: ' + idx);
     if (idx !== -1) {
       this.users[idx] = user;
+
+      alert('userService - updateUser');
     }
   }
 
@@ -85,10 +94,22 @@ export class UserService {
     // inserisco utente con i dati dal form
     // attenzione: fatto per modifiche dei dati in array
 
-      let indend = this.users.length;
-      let indnew = indend + 1;
-      user.id = indnew;
-      this.users.splice(indend,0,user);
+
+   /*
+      user.id = this.users.length + 1;
+      alert('UserService -  create ' + user.id)
+      this.users.splice(0,0,user);
+      */
+
+
+    alert('userService - Create');
+
+
+    const indend = this.users.length;
+    const indnew = indend + 1;
+    user.id = indnew;
+     alert('UserService -  create ' + user.id);
+    this.users.splice(indend,0,user);
    }
 
 

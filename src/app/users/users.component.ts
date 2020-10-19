@@ -13,6 +13,8 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   @Output('updateUser') updateUser = new EventEmitter<User>();
 
+  public isCollapsed = false;  // per gestire il collapse con un button
+
   constructor(private userService: UserService) {
 
 

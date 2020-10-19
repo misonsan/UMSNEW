@@ -33,19 +33,23 @@
 
 
   <div class="form-group form-footer">
-      <div class="row">
+      <div class="row col-sm-9" >
         <div class="col-sm-3">
-            <button class="btn btn-secondary  btn-md"  (click)="resetForm(f.form)">  <!--  reset -->
-          <!--    <fa name="undo"></fa>  -->
+          <button class="btn btn-primary  btn-md"  (click)="backToUsers()">Back  <!--  reset -->
+           <fa-icon [icon]="faHandPointLeft"></fa-icon>
+         </button>
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-secondary  btn-md"  (click)="resetForm(f.form)">Reset  <!--  reset -->
               <fa-icon [icon]="faUndo"></fa-icon>
             </button>
         </div>
         <div class="col-sm-3">
-            <button class="btn btn-success" (click)="saveUser()">    <!--  salva -->
+            <button class="btn btn-success" (click)="saveUser()">Salva    <!--  salva -->
               <fa-icon [icon]="faSave"></fa-icon>
             </button>
         </div>
-  </div>
+    </div>
  </div>
 
 

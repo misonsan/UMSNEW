@@ -12,7 +12,37 @@ import { UserService } from './services/user.service';
 import { NavComponent } from './nav/nav.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalBasicComponent } from './modal-basic/modal-basic.component';
+import { RouterModule, Routes} from '@angular/router';
+import { UserDataComponent } from './user-data/user-data.component';
 
+
+
+
+// definizione delle rotte - prima di definire R
+
+const routes: Routes = [
+  {
+    path: 'users',
+    component: UsersComponent
+  },
+  {
+    path: '',
+    redirectTo: 'users',
+    pathMatch: 'full'
+  },
+  {
+    path: 'users/new',
+    component: UserDetailComponent
+  },
+  {
+    path: 'users/:id/edit',
+    component: UserDetailComponent
+  },
+  {
+    path: 'users/:id',
+    component: UserDataComponent
+  }
+];
 
 @NgModule({
   declarations: [
@@ -21,14 +51,16 @@ import { ModalBasicComponent } from './modal-basic/modal-basic.component';
     UsersComponent,
     UserDetailComponent,
     NavComponent,
-    ModalBasicComponent
-  ],
+    ModalBasicComponent,
+    UserDataComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     FontAwesomeModule,
-    NgbModule
+    NgbModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

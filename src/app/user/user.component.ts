@@ -1,7 +1,10 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {UserService} from '../services/user.service';
 import {User} from '../classes/user';
-import { faUserEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faUserEdit, faTrash, faInfo } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'tr[app-user]',
   templateUrl: './user.component.html',
@@ -15,8 +18,9 @@ export class UserComponent implements OnInit {
   @Output('onSelectUser') onSelectUser = new EventEmitter();
   faUserEdit = faUserEdit;
   faTrash = faTrash;
+  faInfo = faInfo;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private route: Router) {
   }
 
   ngOnInit() {
@@ -30,7 +34,13 @@ export class UserComponent implements OnInit {
   }
 
   updateUser() {
-    this.onSelectUser.emit(this.user);
+    this.route.navigate(['users', this.user.id, 'edit']);
+    this.onSelectUser.emit(this.user);  // questo evento possiamo anche leverlo
+
+  }
+
+  showUserDetail() {
+    this.route.navigate(['users', this.user.id]);
 
   }
 }

@@ -7,15 +7,19 @@
 <td>{{user.age}}</td>
 <td class="buttons">
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
+      <button class="btn btn-primary  btn-sm" (click)="showUserDetail()">
+         <fa-icon [icon]="faInfo" fixed="true"></fa-icon>
+          <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+      </button>
+    </div>
+    <div class="col-sm-4">
       <button class="btn btn-primary btn-sm" (click)="updateUser()">
-    <!--    <fa name="pencil"></fa>  -->
           <fa-icon [icon]="faUserEdit"></fa-icon>
       </button>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <button class="btn btn-danger  btn-sm" (click)="deleteUser()">
- <!--<fa name="trash-o"></fa>  -->
         <fa-icon [icon]="faTrash"></fa-icon>
      </button>
     </div>

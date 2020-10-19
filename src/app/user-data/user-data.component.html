@@ -1,0 +1,90 @@
+
+<!--  fino a video 38 instasllazione font awesome -->
+
+<!--{{User | json}}  -->
+
+<h2>{{ title }}</h2>
+<form #f ="ngForm">
+  <input type="hidden" name="id"  [(ngModel)]="User.id">
+  <div class="form-group">
+    <label for="firstname">First name</label>
+    <input placeholder="Nome" [(ngModel)]="User.name" class="form-control" name="firstname" id="firstname">
+  </div>
+  <div class="form-group">
+    <label  for="lastname">Last name</label>
+    <input placeholder="Inserire il Cognome"  [(ngModel)]="User.lastname"  class="form-control"  name="lastname" id="lastname">
+  </div>
+  <div class="form-group">
+    <label for="fiscalcode">Fiscal code</label>
+    <input  placeholder="Inserire il Codice Fiscale" [(ngModel)]="User.fiscalcode"  class="form-control"  name="fiscalcode" id="fiscalcode">
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input  placeholder="Inserire il Telefono" [(ngModel)]="User.phone"  class="form-control" name="phone" id="phone">
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input  placeholder="Inserire indirizzo email" [(ngModel)]="User.email"  class="form-control" type="email" name="email" id="email">
+
+  </div>
+  <div class="form-group">
+    <label   for="age">Age</label>
+    <input  placeholder="Inserire l'età" [(ngModel)]="User.age"  class="form-control" type="number" name="age" id="age">
+  </div>
+  <div class="form-group">
+    <label   for="province">Province</label>
+    <input  placeholder="Inserire la Provincia" [(ngModel)]="User.province"  class="form-control" type="text" name="province" id="province">
+  </div>
+
+
+
+  <div class="form-group form-footer">
+      <div class="row">
+        <div class="col-sm-3">
+             <button class="btn btn-primary  btn-md"  (click)="backToUsers()">Back
+              <fa-icon [icon]="faHandPointLeft"></fa-icon>
+            </button>
+        </div>
+      </div>
+ </div>
+</form>
+
+
+
+<!--  da angular_Hidran lezione 45 -->
+<!--    funziona
+<h2>{{ title }}</h2>
+<table class="table table-dark">
+  <tr>
+    <th>Name</th>
+    <td>{{User.name}}</td>
+  </tr>
+  <tr>
+    <th>Lastname</th>
+    <td>{{User.lastname}}</td>
+  </tr>
+  <tr>
+    <th>Fiscalcode</th>
+    <td>{{User.fiscalcode}}</td>
+  </tr>
+  <tr>
+    <th>Email</th>
+    <td>{{User.email}}</td>
+  </tr>
+  <tr>
+    <th>Phone</th>
+    <td>{{User.phone}}</td>
+  </tr>
+  <tr>
+    <th>Age</th>
+    <td>{{User.age}}</td>
+  </tr>
+  <tr>
+    <th>Province</th>
+    <td>{{User.province}}</td>
+  </tr>
+  <tfoot>
+  <tr> <td colspan="2"><button class="btn btn-primary" (click)="backToUsers()">BACK</button></td> </tr>
+  </tfoot>
+</table>
+ -->
