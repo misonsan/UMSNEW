@@ -11,20 +11,46 @@ import { faHandPointLeft } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./user-data.component.css']
 })
 export class UserDataComponent implements OnInit {
- private User: User;
- private title = "dettaglio utente";
+ public User: User;
+ public title = "dettaglio utente xx";
  faHandPointLeft = faHandPointLeft;
 
   constructor(private route: ActivatedRoute, private userService: UserService,
               private router: Router) { }
 
-  ngOnInit() {
-    this.route.params.subscribe(p => {
+ngOnInit() {
 
-      this.User = this.userService.getUser(+p.id);
+  this.route.params.subscribe(p => {
+      this.userService.getUser(+p.id).subscribe(
+        response => {
+            this.User = response['data'];
+        },
+        error => {
+   //       alert('User-Data  -- OnInit: ' + error.message);
+           console.log(error);
+        }
+      );
+  });
 
-    });
-  }
+
+
+ /*
+  this.route.params.subscribe(p => {
+    alert('user-deta - letto utente passato ' + p.id);
+      this.userService.getUser(+p.id).subscribe(
+        response => {
+            this.User = response['data'];
+        },
+        error => {
+          alert('user-deta - errore non esegui subscribe ' + error);
+          console.log(error);
+        }
+      );
+      alert('user-deta - dopo subscribe ' + this.User.id );
+  });  */
+}
+
+
   backToUsers(){
     this.router.navigate(['users']);
   }

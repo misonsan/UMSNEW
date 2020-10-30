@@ -1,42 +1,46 @@
+ <!-- {{perDebug}}       {{ user | json}}   -->
+
 <form #f ="ngForm">     <!--  fino a video 38 instasllazione font awesome -->
+
   <input type="hidden" name="id"  [(ngModel)]="user.id">
   <div class="form-group">
-    <label for="firstname">First name</label>
+    <label for="firstname">Nome</label>
     <input placeholder="Nome" [(ngModel)]="user.name" class="form-control" name="firstname" id="firstname">
   </div>
   <div class="form-group">
-    <label  for="lastname">Last name</label>
+    <label  for="lastname">Cognome</label>
     <input placeholder="Inserire il Cognome"  [(ngModel)]="user.lastname"  class="form-control"  name="lastname" id="lastname">
   </div>
   <div class="form-group">
-    <label for="fiscalcode">Fiscal code</label>
+    <label for="fiscalcode">Codice Fiscale</label>
     <input  placeholder="Inserire il Codice Fiscale" [(ngModel)]="user.fiscalcode"  class="form-control"  name="fiscalcode" id="fiscalcode">
   </div>
   <div class="form-group">
-    <label for="phone">Phone</label>
+    <label for="phone">Telefono</label>
     <input  placeholder="Inserire il Telefono" [(ngModel)]="user.phone"  class="form-control" name="phone" id="phone">
   </div>
   <div class="form-group">
-    <label for="email">Email</label>
+    <label for="email">Indirizzo e_mail</label>
     <input  placeholder="Inserire indirizzo email" [(ngModel)]="user.email"  class="form-control" type="email" name="email" id="email">
 
   </div>
   <div class="form-group">
-    <label   for="age">Age</label>
+    <label   for="age">età</label>
     <input  placeholder="Inserire l'età" [(ngModel)]="user.age"  class="form-control" type="number" name="age" id="age">
   </div>
   <div class="form-group">
-    <label   for="province">Province</label>
+    <label   for="province">Provincia</label>
     <input  placeholder="Inserire la Provincia" [(ngModel)]="user.province"  class="form-control" type="text" name="province" id="province">
   </div>
 
 
 
   <div class="form-group form-footer">
+    <div class="row">
       <div class="row col-sm-9" >
         <div class="col-sm-3">
-          <button class="btn btn-primary  btn-md"  (click)="backToUsers()">Back  <!--  reset -->
-           <fa-icon [icon]="faHandPointLeft"></fa-icon>
+          <button class="btn btn-primary  btn-md"  (click)="backToUsers()">Back
+           <fa-icon [icon]="faHandPointLeft"></fa-icon>   <!--  reset -->
          </button>
         </div>
         <div class="col-sm-3">
@@ -45,11 +49,18 @@
             </button>
         </div>
         <div class="col-sm-3">
-            <button class="btn btn-success" (click)="saveUser()">Salva    <!--  salva -->
-              <fa-icon [icon]="faSave"></fa-icon>
-            </button>
+            <button class="btn btn-success btn-md" (click)="saveUser()">Salva    <!--  salva -->
+              <fa-icon [icon]="faSave"  fixed="true"></fa-icon>
+             </button>
         </div>
+        <div class="col-sm-3">
+          <button class="btn btn-danger btn-md" (click)="deleteUser(user)">elimina    <!--  elimina -->
+            <fa-icon [icon]="faTrashAlt"  fixed="true"></fa-icon>
+           </button>
+      </div>
     </div>
+  </div>
+
  </div>
 
 
