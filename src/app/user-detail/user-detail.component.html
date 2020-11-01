@@ -1,42 +1,118 @@
-<form #f ="ngForm">     <!--  fino a video 38 instasllazione font awesome -->
+ <!-- {{perDebug}}       {{ user | json}}   -->
+
+ <form #f ="ngForm">     <!--  fino a video 38 instasllazione font awesome -->
+
   <input type="hidden" name="id"  [(ngModel)]="user.id">
-  <div class="form-group">
-    <label for="firstname">First name</label>
-    <input placeholder="Nome" [(ngModel)]="user.name" class="form-control" name="firstname" id="firstname">
+  <div class="form-row">
+      <div class="form-group col-sm-6">
+        <div class="norequired">
+          <label for="firstname">Nome</label>
+        </div>
+        <input required minlength="3" maxlength="25"pattern="[a-zA-Z\s]*"   #firstName="ngModel" placeholder="inserire il Nome" [(ngModel)]="user.name" class="form-control" name="firstname" id="firstname">
+        <div *ngIf="firstName.dirty && firstName.touched && firstName.invalid">
+         <!-- {{ firstName.errors | json }}  per editare gli errori e poi impostare il validatore corretto -->
+        <!--  validatore lato client -->
+              <div class="alert-danger" *ngIf="firstName.errors.required">    <!-- *ngIf="firstName.invalid"-->
+                il campo nome è obbligatorio
+              </div>
+              <div class="alert-danger" *ngIf="firstName.errors.minlength">
+                il campo deve essere lungo più di {{ firstName.errors.minlength.requiredLength }} caratteri
+              </div>
+              <div class="alert-danger" *ngIf="firstName.errors.maxlength">
+                il campo non deve essere lungo più di {{ firstName.errors.maxlength.requiredLength }} caratteri
+              </div>
+              <div class="alert-danger" *ngIf="firstName.errors.pattern">
+                sul campo nome non posso inserire numeri  <!-- {{firstName.errors.pattern.requiredPattern }}   -->
+              </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        <div class="required">    <!-- per i campi obbligatori -->
+            <label  for="lastname" >Cognome</label>
+        </div>
+
+        <input required minlength="3" maxlength="25"pattern="[a-zA-Z\s]*"   #lastName="ngModel" placeholder="inserire il Cognome" [(ngModel)]="user.lastname" class="form-control" name="lastname" id="lastname">
+        <div *ngIf="lastName.dirty && lastName.touched && lastName.invalid">
+         <!-- {{ firstName.errors | json }}  per editare gli errori e poi impostare il validatore corretto -->
+        <!--  validatore lato client -->
+              <div class="alert-danger" *ngIf="lastName.errors.required">    <!-- *ngIf="firstName.invalid"-->
+                il campo Cognome è obbligatorio
+              </div>
+              <div class="alert-danger" *ngIf="lastName.errors.minlength">
+                il campo deve essere lungo più di {{ lastName.errors.minlength.requiredLength }} caratteri
+              </div>
+              <div class="alert-danger" *ngIf="lastName.errors.maxlength">
+                il campo non deve essere lungo più di {{ lastName.errors.maxlength.requiredLength }} caratteri
+              </div>
+              <div class="alert-danger" *ngIf="lastName.errors.pattern">
+                sul campo Cognome non posso inserire numeri  <!-- {{firstName.errors.pattern.requiredPattern }}   -->
+              </div>
+        </div>
+
+
+
+
+
+
+      </div>
   </div>
-  <div class="form-group">
-    <label  for="lastname">Last name</label>
-    <input placeholder="Inserire il Cognome"  [(ngModel)]="user.lastname"  class="form-control"  name="lastname" id="lastname">
+
+
+  <div class="form-row">
+    <div class="form-group col-sm-8">
+      <div class="norequired">
+          <label for="fiscalcode">Codice Fiscale</label>
+      </div>
+      <input  placeholder="Inserire il Codice Fiscale" [(ngModel)]="user.fiscalcode"  class="form-control"  name="fiscalcode" id="fiscalcode">
+    </div>
+    <div class="form-group col-sm-4">
+      <label for="phone">Telefono</label>
+      <input  placeholder="Inserire il Telefono" [(ngModel)]="user.phone"  class="form-control" name="phone" id="phone">
+    </div>
   </div>
-  <div class="form-group">
-    <label for="fiscalcode">Fiscal code</label>
-    <input  placeholder="Inserire il Codice Fiscale" [(ngModel)]="user.fiscalcode"  class="form-control"  name="fiscalcode" id="fiscalcode">
-  </div>
-  <div class="form-group">
-    <label for="phone">Phone</label>
-    <input  placeholder="Inserire il Telefono" [(ngModel)]="user.phone"  class="form-control" name="phone" id="phone">
-  </div>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input  placeholder="Inserire indirizzo email" [(ngModel)]="user.email"  class="form-control" type="email" name="email" id="email">
+
+  <div class="form-row">
+
+    <div class="form-group  col-sm-7">
+      <label for="email">Indirizzo e_mail</label>
+      <input  placeholder="Inserire indirizzo email" [(ngModel)]="user.email"  class="form-control" type="email" name="email" id="email">
+
+    </div>
+    <div class="form-group  col-sm-3">
+      <label   for="age">età</label>
+      <input placeholder="Inserire l'età" [(ngModel)]="user.age" #age="ngModel" required minlength="2" maxlength="3" pattern="[0-9]{2,2}" class="form-control" type="number" name="age" id="age">
+      <div *ngIf="age.dirty && age.touched && age.invalid">
+
+        <div class="alert-danger" *ngIf="age.errors.required">
+          inserire l'età - campo Obbligatorio
+        </div>
+        <div class="alert-danger" *ngIf="age.errors.minlength">
+          il campo deve avere almeno {{age.errors.minlength.requiredLength }} caratteri
+        </div>
+
+        <div class="alert-danger" *ngIf="age.errors?.pattern">
+          <!-- non posso inserire lettere   {{age.errors.pattern.requiredPattern }}  -->
+          età non valida.
+        </div>
+      </div>
+    </div>
+    <div class="form-group  col-sm-2">
+      <label   for="province">Provincia</label>
+      <input  placeholder="Inserire la Provincia" [(ngModel)]="user.province"  class="form-control" type="text" name="province" id="province">
+    </div>
+
 
   </div>
-  <div class="form-group">
-    <label   for="age">Age</label>
-    <input  placeholder="Inserire l'età" [(ngModel)]="user.age"  class="form-control" type="number" name="age" id="age">
-  </div>
-  <div class="form-group">
-    <label   for="province">Province</label>
-    <input  placeholder="Inserire la Provincia" [(ngModel)]="user.province"  class="form-control" type="text" name="province" id="province">
-  </div>
 
 
+<!-- Bottoni funzionali -->
 
   <div class="form-group form-footer">
+    <div class="row">
       <div class="row col-sm-9" >
         <div class="col-sm-3">
-          <button class="btn btn-primary  btn-md"  (click)="backToUsers()">Back  <!--  reset -->
-           <fa-icon [icon]="faHandPointLeft"></fa-icon>
+          <button class="btn btn-primary  btn-md"  (click)="backToUsers()">Back
+           <fa-icon [icon]="faHandPointLeft"></fa-icon>   <!--  reset -->
          </button>
         </div>
         <div class="col-sm-3">
@@ -45,16 +121,18 @@
             </button>
         </div>
         <div class="col-sm-3">
-            <button class="btn btn-success" (click)="saveUser()">Salva    <!--  salva -->
-              <fa-icon [icon]="faSave"></fa-icon>
-            </button>
+            <button [disabled]="f.invalid" class="btn btn-success btn-md" (click)="saveUser()">Salva    <!--  salva -->
+              <fa-icon [icon]="faSave"  fixed="true"></fa-icon>
+             </button>
         </div>
+        <div class="col-sm-3">
+          <button class="btn btn-danger btn-md" (click)="deleteUser(user)">elimina    <!--  elimina -->
+            <fa-icon [icon]="faTrashAlt"  fixed="true"></fa-icon>
+           </button>
+      </div>
     </div>
+  </div>
+
  </div>
-
-
-
-
-
 
 </form>
