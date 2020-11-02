@@ -17,16 +17,31 @@ export class UsersComponent implements OnInit {
 
   constructor(private userService: UserService) {
 
-
   }
 
   ngOnInit() {
-    this.users = this.userService.getUsers();
+     this.userService.getUsers().subscribe(
+       res => {
+        this.users = res['data'];
+       },
+       error => {
+        console.log(error);
+       }
+     );
   }
 
   onDeleteUser(user: User) {
 
-    this.userService.deleteUser(user);
+    const domanda = confirm("Sei sicuro di voler cancellare?");
+    if (domanda === true) {
+      this.userService.deleteUser(user).subscribe(
+        response => {
+              alert(response['message']);
+        });
+     }else{
+      alert('Operazione annullata');
+    }
+
   }
 
   onSelectUser(user: User) {
