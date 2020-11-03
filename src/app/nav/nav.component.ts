@@ -38,7 +38,8 @@ export class NavComponent implements OnInit {
 
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { faUserPlus,faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus,faUserFriends, faPassport } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from './../services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -48,15 +49,18 @@ import { faUserPlus,faUserFriends } from '@fortawesome/free-solid-svg-icons';
 export class NavComponent implements OnInit {
 
   @Output() onNewUser = new EventEmitter();
+
+  public isUserLoggedIn = false;
   faUserPlus = faUserPlus;
   faUserFriends = faUserFriends;
 
   public showMenu = true;    // variabile per impostare la visualizzazione della barra  - soluzione puro Angular
 
   public isCollapsed = true;  // variabile per soluzione con ngbootstrap
-  constructor(private route: Router) { }
+  constructor(private route: Router, private auth: AuthService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.isUserLoggedIn = this.auth.isUserLoggedIn();
   }
 
 
@@ -69,5 +73,18 @@ export class NavComponent implements OnInit {
   toggleMenu() {
     this.showMenu = !this.showMenu;
   }
+
+  logout(e) {   // la "e" è l'evento passato da html
+    e.preventDefault()
+    this.auth.logout();
+    this.route.navigate(['login']);
+    }
+
+  login(email, pass) {
+    this.auth.signIn(email, pass);
+  }
+
+
+
 
 }
