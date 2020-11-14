@@ -16,6 +16,8 @@ import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { AuthService } from './services/auth.service';
 import { UserDataComponent } from './user-data/user-data.component';
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { ChangepwdComponent } from './changepwd/changepwd.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { LoginComponent } from './login/login.component';
     NavComponent,
     ModalBasicComponent,
     UserDataComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent,
+    ChangepwdComponent
    ],
   imports: [
     BrowserModule,

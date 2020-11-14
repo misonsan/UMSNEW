@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {User} from '../classes/user';
+import {User} from '../classes/User';
 import {UserService} from '../services/user.service';
 import { faUndo, faSave, faHandPointLeft, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';

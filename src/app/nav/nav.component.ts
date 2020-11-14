@@ -39,6 +39,7 @@ export class NavComponent implements OnInit {
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { faUserPlus,faUserFriends, faPassport } from '@fortawesome/free-solid-svg-icons';
+import { User } from '../classes/User';
 import { AuthService } from './../services/auth.service';
 
 @Component({
@@ -57,10 +58,43 @@ export class NavComponent implements OnInit {
   public showMenu = true;    // variabile per impostare la visualizzazione della barra  - soluzione puro Angular
 
   public isCollapsed = true;  // variabile per soluzione con ngbootstrap
-  constructor(private route: Router, private auth: AuthService) { }
+  public username: string;
+
+  constructor(private route: Router, private auth: AuthService) {
+    // ascolto evento creato in auth.service
+    auth.usersignedin.subscribe(
+        (user: User)  => {
+            this.username = user.name;
+            this.isUserLoggedIn = true;
+        }
+    );
+// l'evento logout non ha come risultato un utente quindi lascio vuoto ()
+    auth.userlogout.subscribe(
+          ()  => {
+              this.username = '';
+              this.isUserLoggedIn = false;
+          }
+    );
+     // per la registrazione ascolto evento creato in auth.service
+    auth.usersignedup.subscribe(
+            (user: User)  => {
+                this.username = user.name;
+                this.isUserLoggedIn = true;
+      }
+    );
+
+  }
 
   ngOnInit() {
     this.isUserLoggedIn = this.auth.isUserLoggedIn();
+    if(this.isUserLoggedIn)  {
+      const user = this.auth.getUser();
+      this.username = user.name;
+    }
+
+
+
+
   }
 
 
@@ -84,7 +118,13 @@ export class NavComponent implements OnInit {
     this.auth.signIn(email, pass);
   }
 
+  signIn(e) {
+    e.preventDefault()
+    this.route.navigate(['login']);
+  }
 
-
-
+  signUp(e) {
+    e.preventDefault()
+    this.route.navigate(['signup']);
+  }
 }

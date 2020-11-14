@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {UserService} from '../services/user.service';
-import {User} from '../classes/user';
+import {User} from '../classes/User';
 import { faUserEdit, faTrash, faInfo } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 

@@ -15,19 +15,19 @@ input.ng-invalid{
                   color: red;
                   font-size: 12px;
                   align-content: flex-end;
-                    }
+                     }
 
-.required { color: red;
+.required { color:black;
             font-weight: bold;
             text-align: left;
             font-size: 15px;
             border-style: double;
             border-radius: 5px;
             border-width:2px;
-            border-color: green;
+            border-color: cyan;
             text-indent: 10px;
-           margin-bottom: 5px;
-
+            margin-bottom: 5px;
+            width: 250px;
             height: 35px;
                         }
 .norequired { color:black;

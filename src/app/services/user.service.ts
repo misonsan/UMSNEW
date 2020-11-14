@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { observable, Observable } from 'rxjs';
-import { User } from '../classes/user';
+import { User } from '../classes/User';
+import { AuthService } from './auth.service';
 
 
 
@@ -14,29 +15,56 @@ export class UserService {
 
   private APIURL = 'http://localhost:8000/users';  // definisco l'url su cui effettuare la lettura sul server
 
-  private APIURL_ID;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private auth: AuthService) {
   }
+
+// attenzione: per ogni funzione che voglio usare DEVO passare il token per dimostrare che sono loggato
+
+
+
+
+  getAuthHeader(): HttpHeaders   {
+    // passo il token dentro a header per non farlo passare in chiaro su url
+    let headers = new HttpHeaders(
+        {
+            Authorization: 'Bearer ' +  this.auth.getToken()
+        }
+      );
+      return headers;
+    }
+
+
 
   getUsers() {
 
   // ritorniamo un observoble - il subscribe devo farlo su users.component.ts
-        return this.http.get(this.APIURL);
-        }
 
-  getUser(id: number) {
-    this.APIURL_ID = this.APIURL + '/' + id;
-    return this.http.get(this.APIURL_ID);
+  // la chiamata la faccio solo se ho il token per abilitare la lettura solo a uteti loggati
 
-    }
+      // primo metodo passando il token in chiaro su url
+      //  return this.http.get(this.APIURL + '?token=' + this.auth.getToken());       // <---- 1° metodo  in chiaro su url
+
+      // secondo metodo passando il token non in chiaro come header                   // <---- 2* metodo come header (non in chiaro)
+      return this.http.get(this.APIURL , {
+          headers: this.getAuthHeader()
+        });
 
 
+      }
 
-  deleteUser(user: User) {
-     // const data = {_Method: 'DELETE'};
-     // return this.http.post(this.APIURL + '/' + user.id, data);
-     return this.http.delete(this.APIURL + '/' + user.id);
-    }
+      getUser(id: number) {
+        return this.http.get(this.APIURL + '/' + id,  {
+          headers: this.getAuthHeader()
+        });
+      }
+
+
+      deleteUser(user: User) {
+        return this.http.delete(this.APIURL + '/' + user.id,  {
+          headers: this.getAuthHeader()
+        });
+
+      }
 
 
 
@@ -46,55 +74,19 @@ export class UserService {
     //
     //   return this.http.patch(this.APIURL + '/' + user.id,user);
     user['_method'] = 'PUT';
-    return this.http.patch(this.APIURL + '/' + user.id, user);
+
+    return this.http.patch(this.APIURL + '/' + user.id, user, {
+      headers: this.getAuthHeader()
+    });
 
   }
 
 
    createUser(user: User){
-    return this.http.post(this.APIURL, user);
+    return this.http.post(this.APIURL, user, {
+      headers: this.getAuthHeader()
+    });
   }
-
-
-/*
-  ---------------------  gestione con array
- getUsers() {
-    return this.users;
-  }
-
-  deleteUser(user: User) {
-         // determino indice dell'elemento da cancellare
-    const index = this.users.indexOf(user);
-    // controllo di avere un indice corretto
-    if (index >= 0) {
-      this.users.splice(index, 1);
-    }
-
-  }
-
-  updateUser(user: User) {
-      // aggiorno utente con i dati dal form
-    // attenzione: fatto per modifiche dei dati in array
-    const idx = this.users.findIndex((v) => v.id === user.id);
-    // alert('l indice trovato da modificare: ' + idx);
-    if (idx !== -1) {
-      this.users[idx] = user;
-    }
-  }
-
-
-   createUser(user: User) {
-    // inserisco utente con i dati dal form
-    // attenzione: fatto per modifiche dei dati in array
-
-      let indend = this.users.length;
-      let indnew = indend + 1;
-      user.id = indnew;
-      this.users.splice(indend,0,user);
-   }
-
-*/
-
 
 
 

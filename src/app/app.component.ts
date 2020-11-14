@@ -1,6 +1,6 @@
 
 import {Component} from '@angular/core';
-import {User} from './classes/user';
+import {User} from './classes/User';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

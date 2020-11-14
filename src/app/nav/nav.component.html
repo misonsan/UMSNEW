@@ -5,26 +5,27 @@
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <a class="navbar-brand" href="#">Fixed navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse"   (click)="isCollapsed= !isCollapsed" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"  open="true"  open="true">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"  open="true"  open="true">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse" [ngbCollapse]="isCollapsed">
+  <div class="collapse navbar-collapse" id="navbarCollapse" >
     <ul class="navbar-nav mr-auto"  >
       <li class="nav-item active">
         <a class="nav-link" href="#" routerLink="">Home</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#" routerLink="users">USERS</a>
+        <!-- rendo visibile il link solo se l'utente è loggato -->
+        <a class="nav-link" href="#" *ngIf="isUserLoggedIn"  routerLink="users">USERS</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link" routerLink="/users/new">  New User</a>
+        <a href="#" class="nav-link" *ngIf="isUserLoggedIn" routerLink="/users/new">  New User</a>
       </li>
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utenti
+          <a class="nav-link dropdown-toggle" href="#" *ngIf="isUserLoggedIn" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utenti
         </a>
           <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -61,19 +62,55 @@
             </li>
           </ul>
         </li>
+        <!--  da menu di nav3 -->
+
+        <li class="divider"></li>
+        <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu 5.4</a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Dropdown Submenu 5.4.1</a></li>
+            <li><a href="#">Dropdown Submenu 5.4.2</a></li>
+            <li class="divider"></li>
+            <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu 5.4.3</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Dropdown Submenu 5.4.3.1</a></li>
+                <li><a href="#">Dropdown Submenu 5.4.3.2</a></li>
+                <li><a href="#">Dropdown Submenu 5.4.3.3</a></li>
+                <li><a href="#">Dropdown Submenu 5.4.3.4</a></li>
+              </ul>
+            </li>
+            <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu 5.4.4</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Dropdown Submenu 5.4.4.1</a></li>
+                <li><a href="#">Dropdown Submenu 5.4.4.2</a></li>
+                <li><a href="#">Dropdown Submenu 5.4.4.3</a></li>
+                <li><a href="#">Dropdown Submenu 5.4.4.4</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
 
     </ul>
 
-    <form class="form-inline mt-2 mt-md-0">
+    <form class="form-inline mt-2 mt-md-0" *ngIf="isUserLoggedIn" >
       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
-        <a *ngIf="!isUserLoggedIn"  class="nav-link" href="#">Sign in</a>
+        <a *ngIf="!isUserLoggedIn" (click)="signIn($event)"  class="nav-link" href="#">Login</a>
       </li>
+
       <li class="nav-item text-nowrap">
-        <a *ngIf="isUserLoggedIn" class="nav-link"  href="#" (click)=logout($event)>Sign out</a>
+        <a *ngIf="!isUserLoggedIn" (click)="signUp($event)"  class="nav-link" href="#">Sign up </a>
+      </li>
+
+
+        <li *ngIf="isUserLoggedIn" class="nav-item nav-link ">   <!--  colorUsername  text-nowrap -->
+          {{username}}
+        </li>
+        <li class="nav-item text-nowrap">
+            <a *ngIf="isUserLoggedIn" class="nav-link"  href="#" (click)=logout($event)>Sign out</a>
       </li>
     </ul>
   </div>
