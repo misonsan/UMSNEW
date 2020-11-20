@@ -1,5 +1,6 @@
  <!-- {{perDebug}}       {{ user | json}}   -->
 
+
  <form #f ="ngForm">     <!--  fino a video 38 instasllazione font awesome -->
 
   <input type="hidden" name="id"  [(ngModel)]="user.id">
@@ -9,19 +10,19 @@
           <label for="firstname">Nome</label>
         </div>
         <input required minlength="3" maxlength="25"pattern="[a-zA-Z\s]*"   #firstName="ngModel" placeholder="inserire il Nome" [(ngModel)]="user.name" class="form-control" name="firstname" id="firstname">
-        <div *ngIf="firstName.dirty && firstName.touched && firstName.invalid">
+        <div *ngIf="firstName.dirty && firstName.touched && firstName.invalid" class="alert alert-danger">
          <!-- {{ firstName.errors | json }}  per editare gli errori e poi impostare il validatore corretto -->
         <!--  validatore lato client -->
-              <div class="alert-danger" *ngIf="firstName.errors.required">    <!-- *ngIf="firstName.invalid"-->
+              <div  *ngIf="firstName.errors.required">    <!-- *ngIf="firstName.invalid"-->
                 il campo nome è obbligatorio
               </div>
-              <div class="alert-danger" *ngIf="firstName.errors.minlength">
+              <div  *ngIf="firstName.errors.minlength">
                 il campo deve essere lungo più di {{ firstName.errors.minlength.requiredLength }} caratteri
               </div>
-              <div class="alert-danger" *ngIf="firstName.errors.maxlength">
+              <div  *ngIf="firstName.errors.maxlength">
                 il campo non deve essere lungo più di {{ firstName.errors.maxlength.requiredLength }} caratteri
               </div>
-              <div class="alert-danger" *ngIf="firstName.errors.pattern">
+              <div  *ngIf="firstName.errors.pattern">
                 sul campo nome non posso inserire numeri  <!-- {{firstName.errors.pattern.requiredPattern }}   -->
               </div>
         </div>
@@ -31,20 +32,20 @@
             <label  for="lastname" >Cognome</label>
         </div>
 
-        <input required minlength="3" maxlength="25"pattern="[a-zA-Z\s]*"   #lastName="ngModel" placeholder="inserire il Cognome" [(ngModel)]="user.lastname" class="form-control" name="lastname" id="lastname">
-        <div *ngIf="lastName.dirty && lastName.touched && lastName.invalid">
+        <input required minlength="3" maxlength="25" pattern="[a-zA-Z\s]*"   #lastName="ngModel" placeholder="inserire il Cognome" [(ngModel)]="user.lastname" class="form-control" name="lastname" id="lastname">
+        <div *ngIf="lastName.dirty && lastName.touched && lastName.invalid" class="alert alert-danger">
          <!-- {{ firstName.errors | json }}  per editare gli errori e poi impostare il validatore corretto -->
         <!--  validatore lato client -->
-              <div class="alert-danger" *ngIf="lastName.errors.required">    <!-- *ngIf="firstName.invalid"-->
+              <div *ngIf="lastName.errors.required">    <!-- *ngIf="firstName.invalid"-->
                 il campo Cognome è obbligatorio
               </div>
-              <div class="alert-danger" *ngIf="lastName.errors.minlength">
+              <div *ngIf="lastName.errors.minlength">
                 il campo deve essere lungo più di {{ lastName.errors.minlength.requiredLength }} caratteri
               </div>
-              <div class="alert-danger" *ngIf="lastName.errors.maxlength">
+              <div  *ngIf="lastName.errors.maxlength">
                 il campo non deve essere lungo più di {{ lastName.errors.maxlength.requiredLength }} caratteri
               </div>
-              <div class="alert-danger" *ngIf="lastName.errors.pattern">
+              <div *ngIf="lastName.errors.pattern">
                 sul campo Cognome non posso inserire numeri  <!-- {{firstName.errors.pattern.requiredPattern }}   -->
               </div>
         </div>
@@ -57,11 +58,34 @@
       <div class="required">
           <label for="fiscalcode">Codice Fiscale</label>
       </div>
-      <input  placeholder="Inserire il Codice Fiscale" [(ngModel)]="user.fiscalcode"  class="form-control"  name="fiscalcode" id="fiscalcode">
+      <input  required  maxlength="16"  minlength="16" placeholder="Inserire il Codice Fiscale" [(ngModel)]="user.fiscalcode"   #fiscalcode="ngModel" class="form-control"  name="fiscalcode" id="fiscalcode"  pattern="[/^(?:[A-Z][AEIOU][AEIOUX]|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i]">
+          <div *ngIf="fiscalcode.dirty && fiscalcode.touched && fiscalcode.invalid" class="alert alert-danger">
+            <!-- {{ firstName.errors | json }}  per editare gli errori e poi impostare il validatore corretto -->
+          <!--  validatore lato client -->
+                <div *ngIf="fiscalcode.errors.required">    <!-- *ngIf="firstName.invalid"-->
+                  il campo Codicwe fiscale è obbligatorio
+                </div>
+                <div *ngIf="fiscalcode.errors.minlength">
+                  il campo deve essere lungo  {{ fiscalcode.errors.minlength.requiredLength }} caratteri
+                </div>
+                <div  *ngIf="fiscalcode.errors.maxlength">
+                  il campo non deve essere lungo più di {{ fiscalcode.errors.maxlength.requiredLength }} caratteri
+                </div>
+                <div *ngIf="fiscalcode.errors?.pattern">   
+                  formalismo errato
+                </div>
+          </div>
     </div>
     <div class="form-group col-sm-4">
       <label for="phone">Telefono</label>
-      <input  placeholder="Inserire il Telefono" [(ngModel)]="user.phone"  class="form-control" name="phone" id="phone">
+      <input  placeholder="Inserire il Telefono" [(ngModel)]="user.phone"  #phone="ngModel" class="form-control" name="phone" id="phone" pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$">
+      <div *ngIf="phone.dirty && phone.touched && phone.invalid" class="alert alert-danger">
+        <!-- {{ firstName.errors | json }}  per editare gli errori e poi impostare il validatore corretto -->
+       <!--  validatore lato client -->
+           <div *ngIf="phone.errors?.pattern">   
+              telefono errato
+             </div>
+       </div>
     </div>
   </div>
 
@@ -72,8 +96,17 @@
         <label for="email">Indirizzo e_mail</label>
     </div>
 
-      <input  placeholder="Inserire indirizzo email" [(ngModel)]="user.email"  class="form-control" type="email" name="email" id="email">
-
+      <input  placeholder="Inserire indirizzo email" [(ngModel)]="user.email"  #email="ngModel" class="form-control" type="email" name="email" id="email" patter="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$">
+      <div *ngIf="email.dirty && email.touched && email.invalid" class="alert alert-danger">
+        <!-- {{ firstName.errors | json }}  per editare gli errori e poi impostare il validatore corretto -->
+       <!--  validatore lato client -->
+              <div *ngIf="email.errors.required">    <!-- *ngIf="firstName.invalid"-->
+               il campo email è obbligatorio
+             </div>   
+              <div *ngIf="email.errors?.pattern">   
+              formalismo errato
+             </div>
+       </div>
     </div>
     <div class="form-group  col-sm-3">
       <div class="norequired">
@@ -81,16 +114,16 @@
     </div>
 
       <input placeholder="Inserire l'età" [(ngModel)]="user.age" #age="ngModel" required minlength="2" maxlength="3" pattern="[0-9]{2,2}" class="form-control" type="number" name="age" id="age">
-      <div *ngIf="age.dirty && age.touched && age.invalid">
+      <div *ngIf="age.dirty && age.touched && age.invalid"  class="alert alert-danger">
 
-        <div class="alert-danger" *ngIf="age.errors.required">
+        <div  *ngIf="age.errors.required">
           inserire l'età - campo Obbligatorio
         </div>
-        <div class="alert-danger" *ngIf="age.errors.minlength">
+        <div  *ngIf="age.errors.minlength">
           il campo deve avere almeno {{age.errors.minlength.requiredLength }} caratteri
         </div>
 
-        <div class="alert-danger" *ngIf="age.errors?.pattern">
+        <div *ngIf="age.errors?.pattern">
           <!-- non posso inserire lettere   {{age.errors.pattern.requiredPattern }}  -->
           età non valida.
         </div>
@@ -101,7 +134,20 @@
         <label   for="province">Provincia</label>
       </div>
 
-      <input  placeholder="Inserire la Provincia" [(ngModel)]="user.province"  class="form-control" type="text" name="province" id="province">
+      <input  placeholder="Inserire la Provincia" [(ngModel)]="user.province"  #province="ngModel" class="form-control" type="text" name="province" id="province" pattern="[A-Za-z]+">
+         <!--
+          <div  *ngIf="province.dirty && province.touched && province.valid"  class="icon-success">
+              <fa-icon [icon]="faThumbsUp"></fa-icon>  
+          </div>  -->
+          <div *ngIf="province.dirty && province.touched && province.invalid"  class="alert alert-danger">
+            <div *ngIf="province.errors?.pattern">
+              <!-- non posso inserire lettere   {{age.errors.pattern.requiredPattern }}  -->
+              provincia non valida.
+            </div>
+           <!-- <fa-icon [icon]="faThumbsDown" class="icon-danger"></fa-icon>    -->
+          </div>
+ 
+  
     </div>
   </div>
 
@@ -127,15 +173,92 @@
              </button>
         </div>
         <div class="col-sm-3">
-          <button class="btn btn-danger btn-md" (click)="deleteUser(user)">elimina    <!--  elimina -->
+         <!-- <button class="btn btn-danger btn-md" (click)="deleteUser(user)">elimina   -->   <!--  elimina -->
+            <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-target="#deleteModal" (click)="confirmdeleteUser(user)">Elimina      <!--   Show Modal -->
             <fa-icon [icon]="faTrashAlt"  fixed="true"></fa-icon>
            </button>
       </div>
     </div>
   </div>
+<br>
+<!--   messaggio con esito operazione -->
+
+      <div *ngIf="savechange  && !alertSuccess" class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Errore in Modifica Utente</h4>
+        <p>{{message}}</p>
+        <hr>
+        <p class="mb-0">Contattare il gestore dell'applicazione.</p>
+      </div>
+      <div *ngIf="savechange  && alertSuccess" class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Modifca Utente</h4>
+        <p>{{message}}</p>
+        <hr>
+        <p class="mb-0">Bravissimo !!!!!!</p>
+      </div>
+
+
+
 
  </div>
+<!--   parte di definizione della form popup di cancellazione -->
+ <div class="modal fade" id="deleteModal" name="modelDlt">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <div class="icondel">
+              <fa-icon [icon]="faTrashAlt"  fixed="true"></fa-icon>
+            </div>
+
+            <h2 class="modal-title">Conferma Cancellazione</h2>
+              <button type="button" class="close" data-dismiss="modal">
+                  <span>&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>{{ textMessage1 }} <strong> {{textUser}}</strong> ? </p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#esitoOperationModal"  (click)="abortdeleteUser(user)">annulla
+                <fa-icon [icon]="faHandPointLeft"></fa-icon>
+              </button>
+              <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-target="#esitoOperationModal" (click)="yesdeleteUser(user)">Cancella
+                <fa-icon [icon]="faTrashAlt"  fixed="true"></fa-icon>
+              </button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="esitoOperationModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <div class="iconinfo">
+              <fa-icon [icon]="faInfoCircle"  fixed="true"></fa-icon>
+            </div>
+              <h2 class="modal-title">{{ headerPopup }}</h2>
+              <button type="button" class="close" data-dismiss="modal">
+                  <span>&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <p>{{ textMessage1 }} <strong> {{textUser}}</strong> {{ textMessage2 }} </p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="okconfirm()">Ok</button>   <!--  qui devo fare un metodo che fa solo routing a users -->
+          </div>
+      </div>
+  </div>
+</div>
+
 
 </form>
+<!--
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"></script>   -->
 
 

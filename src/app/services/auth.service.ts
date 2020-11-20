@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaderResponse } from '@angular/common/http';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { User } from '../classes/User';
+import {tap} from "rxjs/operators";
 
 
 interface Jwt {
@@ -24,6 +25,7 @@ export class AuthService {
   @Output() usersignedin = new EventEmitter<User>();
   @Output() usersignedup = new EventEmitter<User>();
   @Output() userlogout = new EventEmitter();
+  @Output() userchgpwd = new EventEmitter();
 
   private APIAUTHURL = 'http://localhost:8000/api/auth/';  // definisco l'url su cui effettuare la lettura sul server
 
@@ -38,6 +40,10 @@ isUserLoggedIn()  {           // ---- ok
 
 }
 
+
+
+//  versione 1   con subscribe fatta nel service
+/*
 signIn(email: string, password: string) {
   // metodo con il quale l'utente si logga
   // alert(' auth-service: '  + email + ' -- ' + password);
@@ -76,6 +82,33 @@ signIn(email: string, password: string) {
           )
 
 }
+*/
+
+//  versione 2 - sposto il subscribe nel componente che chiama il service
+signIn(email: string, password: string) {
+
+  return  this.http.post(this.APIAUTHURL + 'login',
+     {
+       email: email,
+       password: password
+     }
+   ).pipe(
+     tap(
+    (payload: Jwt) => {
+      localStorage.setItem('token', payload.access_token);
+      console.log(payload)
+      localStorage.setItem('user' , JSON.stringify(payload));
+      const user = new User();
+      user.name = payload.user_name;
+      user.email = payload.email;
+      this.usersignedin.emit(user);
+      return true;
+
+    }
+  ));
+
+
+ }
 
 
 
@@ -114,6 +147,42 @@ signUp(username: string, email: string, password: string) {   // ----- ok
 }
 
 
+chgpwd(username: string, emailx: string, newpassword: string) {   // ----- ok
+  // metodo per la registrazione dell 'utente
+
+    const user = new User();
+    user.name = username;
+    user.email =  emailx;
+
+    this.http.post(this.APIAUTHURL + 'chgpwd',
+        {
+          password: newpassword
+   
+        }).subscribe(
+          (payload: Jwt) => {   // payload variabile che identifica risposta del server
+
+            localStorage.setItem('token', payload.access_token);
+            console.log(payload);
+            localStorage.setItem('user', JSON.stringify(payload));
+            // campi aggiuntivi messi per testare - facoltativi
+            localStorage.setItem('user_name', payload.user_name);
+            localStorage.setItem('user_email', payload.email);
+            localStorage.setItem('user_psw', payload.password);
+
+            this.userchgpwd.emit(user);
+            return true;  // provvisorio
+
+          },
+            (httpresp: HttpErrorResponse)  => {
+             console.log(httpresp.message);
+              alert('AuthService-chgpwd: ------> ' + httpresp.message);
+           })
+
+}
+
+
+
+
 logout() {   // ------  ok
   localStorage.removeItem('token');
   // devo eliminare tutte le eventuali variabili salvate su localStorage
@@ -143,7 +212,81 @@ getToken() {    // -----  ok
 }
 
 
+// metodo creato da Moreno per gestire lettura con Username, email e password attuale (changepwd)
+getUserLong(username: string, emailx: string, passwordOld: string) {   // ----- ok
+  // metodo per la registrazione dell 'utente
+
+
+    this.http.post(this.APIAUTHURL + 'getUserLong',
+        {
+          email: emailx,
+          password: passwordOld,
+          name: username
+        }).subscribe(
+          (payload: Jwt) => {
+
+            localStorage.setItem('token', payload.access_token);
+            console.log(payload);
+            localStorage.setItem('user', JSON.stringify(payload));
+            // campi aggiuntivi messi per testare - facoltativi
+            localStorage.setItem('user_name', payload.user_name);
+            localStorage.setItem('user_email', payload.email);
+            localStorage.setItem('user_psw', payload.password);
+
+
+            return true;
+
+          },
+            (httpresp: HttpErrorResponse)  => {
+             console.log(httpresp.message);
+              alert('AuthService-getUserLong: ------> ' + httpresp.message);
+           })
+}
+
+
+
 
 }
 
 
+/*
+   buttare
+
+.pipe(tap(
+          (payload: Jwt) => {
+
+            localStorage.setItem('token', payload.access_token);
+            console.log(payload);
+            localStorage.setItem('user', JSON.stringify(payload));
+            // campi aggiuntivi messi per testare - facoltativi
+            localStorage.setItem('user_name', payload.user_name);
+            localStorage.setItem('user_email', payload.email);
+            localStorage.setItem('user_psw', payload.password);
+            return true;
+          }
+        ));
+
+subscribe(
+          (payload: Jwt) => {
+
+            localStorage.setItem('token', payload.access_token);
+            console.log(payload);
+            localStorage.setItem('user', JSON.stringify(payload));
+            // campi aggiuntivi messi per testare - facoltativi
+            localStorage.setItem('user_name', payload.user_name);
+            localStorage.setItem('user_email', payload.email);
+            localStorage.setItem('user_psw', payload.password);
+
+
+            return true;
+
+          },
+            (httpresp: HttpErrorResponse)  => {
+             console.log(httpresp.message);
+              alert('AuthService-getUserLong: ------> ' + httpresp.message);
+           })
+
+
+
+
+*/

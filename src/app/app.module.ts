@@ -18,6 +18,8 @@ import { UserDataComponent } from './user-data/user-data.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ChangepwdComponent } from './changepwd/changepwd.component';
+import { EqualValidator } from './changepwd/password.match.directive';   // per la validazione delle passowrd (changepwd)
+import { EqualNotValidator } from './changepwd/password.equal.directive';   // per la validazione delle passowrd (changepwd)
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ChangepwdComponent } from './changepwd/changepwd.component';
     UserDataComponent,
     LoginComponent,
     SignupComponent,
-    ChangepwdComponent
+    ChangepwdComponent,
+    EqualValidator,
+    EqualNotValidator
    ],
   imports: [
     BrowserModule,

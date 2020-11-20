@@ -82,7 +82,13 @@ export class NavComponent implements OnInit {
                 this.isUserLoggedIn = true;
       }
     );
-
+    // per il cambio password ascolto evento creato in auth.service
+    auth.userchgpwd.subscribe(
+      (user: User)  => {
+          this.username = user.name;
+          this.isUserLoggedIn = true;
+      }
+  );
   }
 
   ngOnInit() {
@@ -127,4 +133,11 @@ export class NavComponent implements OnInit {
     e.preventDefault()
     this.route.navigate(['signup']);
   }
+
+
+  chgpwd(e)  {
+    e.preventDefault()
+    this.route.navigate(['chgpwd']);
+  }
+
 }

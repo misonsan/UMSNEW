@@ -1,5 +1,6 @@
 input.ng-invalid{
   border: 1px solid red;
+
 }
 
 .ng-valid[required], .ng-valid.required  {
@@ -35,5 +36,49 @@ input.ng-invalid{
             text-align: left;
              margin-bottom: 5px;
             height: 35px;
-                        }
+            }
 
+.icondel {
+  color: red;
+  size: 25px;
+  vertical-align: text-bottom;
+  margin-right: 15px;
+}
+
+.iconinfo {
+  color:blue;
+  font-size: xx-large;
+  vertical-align: text-bottom;
+  margin-right: 15px;
+
+}
+
+.icon-danger {
+  color: red;
+  font-size: large;
+  
+
+} 
+.icon-success {
+  color: green;
+  font-size: large;
+
+} 
+
+/*
+  da testare per controlli   https://www.the-art-of-web.com/html/html5-form-validation/
+
+  input:required:invalid, input:focus:invalid {
+    background-image: url(/images/invalid.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+  }
+  input:required:valid {
+    background-image: url(/images/valid.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+  }
+
+
+
+*/

@@ -1,1 +1,119 @@
 <p>changepwd works!</p>
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h1>
+      Cambio Password Utente
+    </h1>
+     <form name="chgpwdForm" #f="ngForm" (ngSubmit)="chgpwd(f)"  >
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input required  class="form-control"  minlength="2" type="name" ngModel #name="ngModel" name="name" id="name" placeholder="Inserire il Nome">
+        <div *ngIf="name.dirty && name.touched && name.invalid" class="alert alert-danger">
+
+          <div *ngIf="name.errors.required">
+            il Nome è Obbligatorio
+          </div>
+          <div *ngIf="name.errors.minlength">
+            il campo nome deve essere lungo   {{name.errors.minlength.requiredLength }} caratteri
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input required  class="form-control"  type="email" ngModel #email="ngModel" name="email" id="email" placeholder="Inserire il campo email">
+        <div *ngIf="email.dirty && email.touched && email.invalid"  class="alert alert-danger">
+
+          <div  *ngIf="email.errors.required">
+            il campo email è obbligatorio
+          </div>
+          <div  *ngIf="email.errors.email">
+            il formato della email è <small><b>joe@abc.com</b></small>
+          </div>
+        </div>
+      </div>
+      <!--  password attuale -->
+      <div class="form-group">
+        <label for="password">Password attuale</label>
+        <input class="form-control" required minlength="6" ngModel type="password" #password="ngModel" name="password" id="password"  placeholder="Inserire la password attuale">
+        <div *ngIf="password.dirty && password.touched && password.invalid" class="alert alert-danger">
+
+          <div  *ngIf="password.errors.required">
+            la password è un campo obbligatorio
+          </div>
+          <div  *ngIf="password.errors.minlength">
+            la password deve avere almeno  {{password.errors.minlength.requiredLength }} carattewri
+          </div>
+
+        </div>
+      </div>
+      <!--  Nuova password  -->
+      <div class="form-group">
+        <label for="newpassword">Nuova Password</label>
+        <input class="form-control" required minlength="6" ngModel type="password" #newpassword="ngModel" name="newpassword" id="newpassword"  placeholder="Inserire la Nuova password"  validateNotEqual="password">
+        <div *ngIf="newpassword.dirty && newpassword.touched && newpassword.invalid" class="alert alert-danger">
+
+          <div  *ngIf="newpassword.errors.required">
+            la nuova password è un campo obbligatorio
+          </div>
+          <div  *ngIf="newpassword.errors.minlength">
+            la nuova password deve avere almeno  {{newpassword.errors.minlength.requiredLength }} carattewri
+          </div>
+          <div  *ngIf="newpassword.value === password.value">
+            il campo <strong>nuova password</strong>  deve essere diverso da campo <strong> password</strong> new: {{ newpassword | json}}  old:  {{  password | json }}
+          </div>
+        </div>
+      </div>
+      <!--  conferma Nuova password  -->
+      <div class="form-group">
+        <label for="confnewpassword">conferma Nuova Password</label>
+        <input class="form-control" required minlength="6" ngModel type="password" #confnewpassword="ngModel" name="confnewpassword" id="confnewpassword"  placeholder="reinserire la Nuova password" validateEqual="newpassword">
+        <div *ngIf="confnewpassword.dirty && confnewpassword.touched && confnewpassword.invalid" class="alert alert-danger">
+
+          <div  *ngIf="confnewpassword.errors.required">
+            campo di conferma nuova password è un campo obbligatorio
+          </div>
+          <div  *ngIf="confnewpassword.errors.minlength">
+            il campo di conferma nuova password deve avere almeno  {{confnewpassword.errors.minlength.requiredLength }} carattewri
+          </div>
+          <div  *ngIf="confnewpassword.value !== newpassword.value">
+            il campo di conferma nuova password diverso da campo nuova password
+          </div>
+          <!--    stesso controllo su differente
+          <div [hidden]="confnewpassword.valid || confnewpassword.pristine" class="alert alert-danger">
+                Passwords did not match
+          </div>   -->
+
+
+
+        </div>
+      </div>
+
+      <!--
+      <div *ngIf="alertSuccess" class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Well done!</h4>
+        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+        <hr>
+        <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+      </div>   savechangepwd  &&   -->
+      <div *ngIf="savechangepwd  && !alertSuccess" class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Errore in Cambio Password</h4>
+        <p>Si è verificato un errore in modifica password</p>
+        <hr>
+        <p class="mb-0">Contattare il gestore dell'applicazione.</p>
+      </div>
+      <div *ngIf="savechangepwd  && alertSuccess" class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Modifca Password</h4>
+        <p>la Password è stata modifica con successo</p>
+        <hr>
+        <p class="mb-0">Bravissimo !!!!!!</p>
+      </div>
+      <div class="form-group text-center">
+        <button [disabled]="!f.valid" class="btn btn-primary">conferma</button>
+      </div>
+    </form>
+  </div>
+</div>
+

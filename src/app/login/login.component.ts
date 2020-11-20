@@ -4,6 +4,17 @@ import { Router } from '@angular/router';
 import { User } from '../classes/User';
 import { AuthService } from '../services/auth.service';
 
+interface Jwt {
+  // definisco l'interfaccia dei dati che ottengo dalla chiamata di login
+      access_token: string;
+      token_type: string;
+      expires_in: number;
+  // parametri aggiuntivi - vedi AuthController in laraapi
+      user_name: string;
+      email: string;
+      password: string;
+  }
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,26 +32,26 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       }
     );
+
   }
 
+  // vertsione in cui sposto il subscribe nel componente e non nel service
   signIn(form: NgForm) {
-    // alert(form.value.email);
-    //alert('login --- signin - ctr_Form ' + form.valid);
-      if(!form.valid) {
+       if(!form.valid) {
         return false;
       }
-      let result = this.auth.signIn(form.value.email, form.value.password);
-      //alert('login - esito login da auth ----->  ' + result);
-
-      /*
-      let mailLocStorage = localStorage.getItem('token');
-      //alert('mailLocalStorAGE: ' + mailLocStorage);
-      if(mailLocStorage) {
-        this.router.navigate(['']);
-      } else {
-        alert('login - Anomalia in effettuazione Login');
-      }  */
-   }
+       this.auth.signIn(form.value.email, form.value.password)
+            .subscribe(
+              (_payload: Jwt) => {
+                 alert('login eseguito con successo');
+                this.router.navigate(['/']);
+              },
+              ({error}) =>{
+                alert(error.error);
+                console.log(error)
+              }
+            );
+    }
 
 
    changePassword() {
