@@ -97,7 +97,11 @@ signIn(email: string, password: string) {
     (payload: Jwt) => {
       localStorage.setItem('token', payload.access_token);
       console.log(payload)
-      localStorage.setItem('user' , JSON.stringify(payload));
+      localStorage.setItem('user' , JSON.stringify(payload));            // campi aggiuntivi messi per testare - facoltativi
+      localStorage.setItem('user_name', payload.user_name);
+      localStorage.setItem('user_email', payload.email);
+      localStorage.setItem('user_psw', payload.password);
+
       const user = new User();
       user.name = payload.user_name;
       user.email = payload.email;
@@ -111,7 +115,8 @@ signIn(email: string, password: string) {
  }
 
 
-
+// primo metodo - funziona
+/*
 signUp(username: string, email: string, password: string) {   // ----- ok
   // metodo per la registrazione dell 'utente
 
@@ -145,6 +150,45 @@ signUp(username: string, email: string, password: string) {   // ----- ok
            })
 
 }
+  */
+
+// Secondo metodo -
+
+signUp(username: string, email: string, password: string) {   // ----- ok
+  // metodo per la registrazione dell 'utente
+
+    const user = new User();
+    user.name = username;
+    user.email =  email;
+
+    return this.http.post(this.APIAUTHURL + 'signup',
+        {
+          email: email,
+          password: password,
+          name: username
+        }).pipe(
+          tap(
+            (payload: Jwt) => {   // payload variabile che identifica risposta del server
+
+              localStorage.setItem('token', payload.access_token);
+              console.log(payload);
+              localStorage.setItem('user', JSON.stringify(payload));
+              // campi aggiuntivi messi per testare - facoltativi
+              localStorage.setItem('user_name', payload.user_name);
+              localStorage.setItem('user_email', payload.email);
+              localStorage.setItem('user_psw', payload.password);
+
+              this.usersignedup.emit(user);
+              return true;  // provvisorio
+            }
+           ));
+
+}
+
+
+
+
+
 
 
 chgpwd(username: string, emailx: string, newpassword: string) {   // ----- ok
@@ -157,7 +201,7 @@ chgpwd(username: string, emailx: string, newpassword: string) {   // ----- ok
     this.http.post(this.APIAUTHURL + 'chgpwd',
         {
           password: newpassword
-   
+
         }).subscribe(
           (payload: Jwt) => {   // payload variabile che identifica risposta del server
 

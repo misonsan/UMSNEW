@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
   }
 
   // vertsione in cui sposto il subscribe nel componente e non nel service
+  // prima versione   --- funziona
+  /*
   signIn(form: NgForm) {
        if(!form.valid) {
         return false;
@@ -51,8 +53,46 @@ export class LoginComponent implements OnInit {
                 console.log(error)
               }
             );
-    }
+    }  */
 
+
+
+
+
+ // vertsione in cui sposto il subscribe nel componente e non nel service
+  // seconda versione - Utilizzo di async-awai  (più performante con meno codice)
+
+  async signIn(form: NgForm) {
+    if(!form.valid) {
+     return false;
+   }
+   try {
+     /*
+    const resp = await this.auth.signIn(form.value.email, form.value.password).toPromise();
+      alert('login corretto per utente:  ' + resp.user_name);
+      this.router.navigate(['/']);  */
+      const resp = await this.auth.signIn(form.value.email, form.value.password)
+      .toPromise();
+    alert(resp.user_name + ' logged in successfully');
+    this.router.navigate(['/']);
+
+   } catch (e) {
+       switch(e.status)  {
+           case 401:
+             alert(e.error.error);
+             break;
+           case 402:
+            alert(e.statusText);
+             break;
+           case 404:
+             alert(e.header.message);
+             break;
+           case 500:
+             alert('contattare il server');
+             break;
+       }
+   }
+  }
 
    changePassword() {
 
